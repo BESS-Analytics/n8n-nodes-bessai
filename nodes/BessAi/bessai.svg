@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="12" fill="#0066FF"/>
+  <path d="M20 18h24a2 2 0 0 1 2 2v24a2 2 0 0 1-2 2H20a2 2 0 0 1-2-2V20a2 2 0 0 1 2-2z" fill="#fff" opacity="0.2"/>
+  <path d="M32 22c-5.523 0-10 4.477-10 10s4.477 10 10 10 10-4.477 10-10-4.477-10-10-10zm0 3a2 2 0 1 1 0 4 2 2 0 0 1 0-4zm-4 10a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-8z" fill="#fff"/>
+  <text x="32" y="54" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="8" font-weight="bold">BESS</text>
+</svg>

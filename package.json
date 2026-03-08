@@ -1,0 +1,62 @@
+{
+	"name": "n8n-nodes-bessai",
+	"version": "0.1.0",
+	"description": "Official n8n community node for BESS AI Voice Platform — create and manage voice AI agents, make calls, run batch campaigns, and track analytics.",
+	"keywords": [
+		"n8n-community-node-package",
+		"n8n-node-bessai",
+		"bessai",
+		"bess-ai",
+		"voice ai",
+		"conversational ai",
+		"call center",
+		"ai agents",
+		"batch calls"
+	],
+	"license": "MIT",
+	"homepage": "https://bess-ai.com",
+	"author": {
+		"name": "BESS Analytics",
+		"email": "support@bess-ai.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BESS-Analytics/n8n-nodes-bessai.git"
+	},
+	"main": "index.js",
+	"scripts": {
+		"build": "tsc && gulp build:icons",
+		"dev": "tsc --watch",
+		"format": "prettier nodes credentials --write",
+		"lint": "eslint nodes credentials package.json",
+		"lintfix": "eslint nodes credentials package.json --fix",
+		"prepublishOnly": "npm run build && npm run lint -c .eslintrc.prepublish.js nodes credentials package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"credentials": [
+			"dist/credentials/BessAiApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/BessAi/BessAi.node.js",
+			"dist/nodes/BessAi/BessAiTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@typescript-eslint/parser": "~5.45",
+		"eslint-plugin-n8n-nodes-base": "^1.16.0",
+		"gulp": "^4.0.2",
+		"n8n-workflow": "*",
+		"prettier": "^2.7.1",
+		"typescript": "~5.5.0"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	},
+	"bugs": {
+		"url": "https://github.com/BESS-Analytics/n8n-nodes-bessai/issues"
+	}
+}

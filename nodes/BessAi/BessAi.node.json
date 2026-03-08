@@ -1,0 +1,22 @@
+{
+	"node": "n8n-nodes-base.bessAi",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Communication"],
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://api.bess-ai.com/docs"
+			}
+		],
+		"credentialDocumentation": [
+			{
+				"url": "https://api.bess-ai.com/docs"
+			}
+		]
+	},
+	"alias": ["voice", "call", "phone", "ai", "agent", "telephony", "call center"],
+	"subcategories": {
+		"Communication": ["Voice AI"]
+	}
+}
