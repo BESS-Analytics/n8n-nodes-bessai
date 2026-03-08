@@ -1,5 +1,5 @@
 import type { IDataObject, IExecuteFunctions } from 'n8n-workflow';
-import { bessApiRequest, bessApiRequestAllItems } from './GenericFunctions';
+import { bessApiRequest, bessApiRequestAllItems, validateUUID, safeJsonParse } from './GenericFunctions';
 
 // ─── Agent ───────────────────────────────────────────────
 
@@ -17,12 +17,14 @@ export async function handleAgentOperation(
 
 	if (operation === 'delete') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
+		validateUUID(this, agentId, 'Agent ID');
 		await bessApiRequest.call(this, 'DELETE', `/api/v1/agents/${agentId}`);
 		return { success: true };
 	}
 
 	if (operation === 'get') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
+		validateUUID(this, agentId, 'Agent ID');
 		return bessApiRequest.call(this, 'GET', `/api/v1/agents/${agentId}`);
 	}
 
@@ -37,11 +39,13 @@ export async function handleAgentOperation(
 
 	if (operation === 'publish') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
+		validateUUID(this, agentId, 'Agent ID');
 		return bessApiRequest.call(this, 'POST', `/api/v1/agents/${agentId}/publish`);
 	}
 
 	if (operation === 'update') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
+		validateUUID(this, agentId, 'Agent ID');
 		const updateFields = this.getNodeParameter('updateFields', i) as IDataObject;
 		return bessApiRequest.call(this, 'PATCH', `/api/v1/agents/${agentId}`, updateFields);
 	}
@@ -58,6 +62,7 @@ export async function handleCallOperation(
 ): Promise<any> {
 	if (operation === 'createPhoneCall') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
+		validateUUID(this, agentId, 'Agent ID');
 		const fromNumber = this.getNodeParameter('fromNumber', i) as string;
 		const toNumber = this.getNodeParameter('toNumber', i) as string;
 		const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
@@ -69,10 +74,10 @@ export async function handleCallOperation(
 		};
 
 		if (additionalFields.metadata) {
-			body.metadata = JSON.parse(additionalFields.metadata as string);
+			body.metadata = safeJsonParse(this, additionalFields.metadata as string, 'Metadata');
 		}
 		if (additionalFields.dynamic_variables) {
-			body.dynamic_variables = JSON.parse(additionalFields.dynamic_variables as string);
+			body.dynamic_variables = safeJsonParse(this, additionalFields.dynamic_variables as string, 'Dynamic Variables');
 		}
 
 		return bessApiRequest.call(this, 'POST', '/api/v1/calls/phone', body);
@@ -80,15 +85,16 @@ export async function handleCallOperation(
 
 	if (operation === 'createWebCall') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
+		validateUUID(this, agentId, 'Agent ID');
 		const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
 
 		const body: IDataObject = { agent_id: agentId };
 
 		if (additionalFields.metadata) {
-			body.metadata = JSON.parse(additionalFields.metadata as string);
+			body.metadata = safeJsonParse(this, additionalFields.metadata as string, 'Metadata');
 		}
 		if (additionalFields.dynamic_variables) {
-			body.dynamic_variables = JSON.parse(additionalFields.dynamic_variables as string);
+			body.dynamic_variables = safeJsonParse(this, additionalFields.dynamic_variables as string, 'Dynamic Variables');
 		}
 
 		return bessApiRequest.call(this, 'POST', '/api/v1/calls/web', body);
@@ -96,11 +102,13 @@ export async function handleCallOperation(
 
 	if (operation === 'end') {
 		const callId = this.getNodeParameter('callId', i) as string;
+		validateUUID(this, callId, 'Call ID');
 		return bessApiRequest.call(this, 'POST', `/api/v1/calls/${callId}/end`);
 	}
 
 	if (operation === 'get') {
 		const callId = this.getNodeParameter('callId', i) as string;
+		validateUUID(this, callId, 'Call ID');
 		return bessApiRequest.call(this, 'GET', `/api/v1/calls/${callId}`);
 	}
 
@@ -142,12 +150,14 @@ export async function handlePhoneNumberOperation(
 
 	if (operation === 'delete') {
 		const phoneNumberId = this.getNodeParameter('phoneNumberId', i) as string;
+		validateUUID(this, phoneNumberId, 'Phone Number ID');
 		await bessApiRequest.call(this, 'DELETE', `/api/v1/phone-numbers/${phoneNumberId}`);
 		return { success: true };
 	}
 
 	if (operation === 'get') {
 		const phoneNumberId = this.getNodeParameter('phoneNumberId', i) as string;
+		validateUUID(this, phoneNumberId, 'Phone Number ID');
 		return bessApiRequest.call(this, 'GET', `/api/v1/phone-numbers/${phoneNumberId}`);
 	}
 
@@ -162,6 +172,7 @@ export async function handlePhoneNumberOperation(
 
 	if (operation === 'update') {
 		const phoneNumberId = this.getNodeParameter('phoneNumberId', i) as string;
+		validateUUID(this, phoneNumberId, 'Phone Number ID');
 		const updateFields = this.getNodeParameter('updateFields', i) as IDataObject;
 		return bessApiRequest.call(
 			this,
@@ -183,11 +194,12 @@ export async function handleBatchCallOperation(
 ): Promise<any> {
 	if (operation === 'create') {
 		const agentId = this.getNodeParameter('agentId', i) as string;
+		validateUUID(this, agentId, 'Agent ID');
 		const fromNumber = this.getNodeParameter('fromNumber', i) as string;
 		const contactsRaw = this.getNodeParameter('contacts', i) as string;
 		const additionalFields = this.getNodeParameter('additionalFields', i) as IDataObject;
 
-		const contacts = JSON.parse(contactsRaw);
+		const contacts = safeJsonParse(this, contactsRaw, 'Contacts');
 		const body: IDataObject = {
 			agent_id: agentId,
 			from_number: fromNumber,
@@ -200,6 +212,7 @@ export async function handleBatchCallOperation(
 
 	if (operation === 'get') {
 		const batchCallId = this.getNodeParameter('batchCallId', i) as string;
+		validateUUID(this, batchCallId, 'Batch Call ID');
 		return bessApiRequest.call(this, 'GET', `/api/v1/batch-calls/${batchCallId}`);
 	}
 
@@ -219,21 +232,25 @@ export async function handleBatchCallOperation(
 
 	if (operation === 'start') {
 		const batchCallId = this.getNodeParameter('batchCallId', i) as string;
+		validateUUID(this, batchCallId, 'Batch Call ID');
 		return bessApiRequest.call(this, 'POST', `/api/v1/batch-calls/${batchCallId}/start`);
 	}
 
 	if (operation === 'pause') {
 		const batchCallId = this.getNodeParameter('batchCallId', i) as string;
+		validateUUID(this, batchCallId, 'Batch Call ID');
 		return bessApiRequest.call(this, 'POST', `/api/v1/batch-calls/${batchCallId}/pause`);
 	}
 
 	if (operation === 'resume') {
 		const batchCallId = this.getNodeParameter('batchCallId', i) as string;
+		validateUUID(this, batchCallId, 'Batch Call ID');
 		return bessApiRequest.call(this, 'POST', `/api/v1/batch-calls/${batchCallId}/resume`);
 	}
 
 	if (operation === 'cancel') {
 		const batchCallId = this.getNodeParameter('batchCallId', i) as string;
+		validateUUID(this, batchCallId, 'Batch Call ID');
 		return bessApiRequest.call(this, 'POST', `/api/v1/batch-calls/${batchCallId}/cancel`);
 	}
 

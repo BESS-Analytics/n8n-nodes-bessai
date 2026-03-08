@@ -64,18 +64,21 @@ export const batchCallFields: INodeProperties[] = [
 	//         batchCall: create
 	// ----------------------------------
 	{
-		displayName: 'Agent ID',
+		displayName: 'Agent',
 		name: 'agentId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
 		displayOptions: {
 			show: {
 				resource: ['batchCall'],
 				operation: ['create'],
 			},
 		},
-		description: 'The ID of the agent to use for the batch',
+		description: 'The agent to use for the batch. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
 		displayName: 'From Number',

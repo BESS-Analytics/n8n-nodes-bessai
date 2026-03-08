@@ -7,7 +7,43 @@ import type {
 	IHttpRequestMethods,
 	JsonObject,
 } from 'n8n-workflow';
-import { NodeApiError } from 'n8n-workflow';
+import { NodeApiError, NodeOperationError } from 'n8n-workflow';
+
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/**
+ * Validates that a string is a valid UUID v4 format.
+ * Prevents path traversal / injection in URL path parameters.
+ */
+export function validateUUID(
+	context: IExecuteFunctions | IPollFunctions,
+	value: string,
+	fieldName: string,
+): string {
+	const trimmed = value.trim();
+	if (!UUID_REGEX.test(trimmed)) {
+		throw new NodeOperationError(context.getNode(), `Invalid UUID for "${fieldName}": ${value}`);
+	}
+	return trimmed;
+}
+
+/**
+ * Safely parses a JSON string, throwing a user-friendly error on failure.
+ */
+export function safeJsonParse(
+	context: IExecuteFunctions,
+	value: string,
+	fieldName: string,
+): any {
+	try {
+		return JSON.parse(value);
+	} catch {
+		throw new NodeOperationError(
+			context.getNode(),
+			`Invalid JSON in "${fieldName}" field. Please check the format.`,
+		);
+	}
+}
 
 export async function bessApiRequest(
 	this: IExecuteFunctions | ILoadOptionsFunctions | IHookFunctions | IPollFunctions,

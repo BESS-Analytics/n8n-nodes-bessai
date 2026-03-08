@@ -246,36 +246,42 @@ export const agentFields: INodeProperties[] = [
 	//         agent: delete
 	// ----------------------------------
 	{
-		displayName: 'Agent ID',
+		displayName: 'Agent',
 		name: 'agentId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
 		displayOptions: {
 			show: {
 				resource: ['agent'],
 				operation: ['delete'],
 			},
 		},
-		description: 'The ID of the agent to delete',
+		description: 'The agent to delete. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 
 	// ----------------------------------
 	//         agent: get
 	// ----------------------------------
 	{
-		displayName: 'Agent ID',
+		displayName: 'Agent',
 		name: 'agentId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
 		displayOptions: {
 			show: {
 				resource: ['agent'],
 				operation: ['get'],
 			},
 		},
-		description: 'The ID of the agent to retrieve',
+		description: 'The agent to retrieve. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 
 	// ----------------------------------
@@ -314,36 +320,42 @@ export const agentFields: INodeProperties[] = [
 	//         agent: publish
 	// ----------------------------------
 	{
-		displayName: 'Agent ID',
+		displayName: 'Agent',
 		name: 'agentId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
 		displayOptions: {
 			show: {
 				resource: ['agent'],
 				operation: ['publish'],
 			},
 		},
-		description: 'The ID of the agent to publish',
+		description: 'The agent to publish. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 
 	// ----------------------------------
 	//         agent: update
 	// ----------------------------------
 	{
-		displayName: 'Agent ID',
+		displayName: 'Agent',
 		name: 'agentId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
 		displayOptions: {
 			show: {
 				resource: ['agent'],
 				operation: ['update'],
 			},
 		},
-		description: 'The ID of the agent to update',
+		description: 'The agent to update. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
 		displayName: 'Update Fields',

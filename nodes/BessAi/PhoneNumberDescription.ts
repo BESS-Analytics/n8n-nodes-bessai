@@ -120,36 +120,42 @@ export const phoneNumberFields: INodeProperties[] = [
 	//         phoneNumber: delete
 	// ----------------------------------
 	{
-		displayName: 'Phone Number ID',
+		displayName: 'Phone Number',
 		name: 'phoneNumberId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getPhoneNumbers',
+		},
 		displayOptions: {
 			show: {
 				resource: ['phoneNumber'],
 				operation: ['delete'],
 			},
 		},
-		description: 'The ID of the phone number to delete',
+		description: 'The phone number to delete. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 
 	// ----------------------------------
 	//         phoneNumber: get
 	// ----------------------------------
 	{
-		displayName: 'Phone Number ID',
+		displayName: 'Phone Number',
 		name: 'phoneNumberId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getPhoneNumbers',
+		},
 		displayOptions: {
 			show: {
 				resource: ['phoneNumber'],
 				operation: ['get'],
 			},
 		},
-		description: 'The ID of the phone number to retrieve',
+		description: 'The phone number to retrieve. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 
 	// ----------------------------------
@@ -188,18 +194,21 @@ export const phoneNumberFields: INodeProperties[] = [
 	//         phoneNumber: update
 	// ----------------------------------
 	{
-		displayName: 'Phone Number ID',
+		displayName: 'Phone Number',
 		name: 'phoneNumberId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getPhoneNumbers',
+		},
 		displayOptions: {
 			show: {
 				resource: ['phoneNumber'],
 				operation: ['update'],
 			},
 		},
-		description: 'The ID of the phone number to update',
+		description: 'The phone number to update. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
 		displayName: 'Update Fields',

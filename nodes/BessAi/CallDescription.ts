@@ -52,18 +52,21 @@ export const callFields: INodeProperties[] = [
 	//         call: createPhoneCall
 	// ----------------------------------
 	{
-		displayName: 'Agent ID',
+		displayName: 'Agent',
 		name: 'agentId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
 		displayOptions: {
 			show: {
 				resource: ['call'],
 				operation: ['createPhoneCall'],
 			},
 		},
-		description: 'The ID of the agent to use for the call',
+		description: 'The agent to use for the call. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
 		displayName: 'From Number',
@@ -127,18 +130,21 @@ export const callFields: INodeProperties[] = [
 	//         call: createWebCall
 	// ----------------------------------
 	{
-		displayName: 'Agent ID',
+		displayName: 'Agent',
 		name: 'agentId',
-		type: 'string',
+		type: 'options',
 		required: true,
 		default: '',
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
 		displayOptions: {
 			show: {
 				resource: ['call'],
 				operation: ['createWebCall'],
 			},
 		},
-		description: 'The ID of the agent to use for the web call',
+		description: 'The agent to use for the web call. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
 		displayName: 'Additional Fields',

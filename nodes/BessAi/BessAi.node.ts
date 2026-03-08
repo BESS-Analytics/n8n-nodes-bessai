@@ -1,10 +1,13 @@
 import type {
 	IExecuteFunctions,
+	ILoadOptionsFunctions,
 	INodeExecutionData,
+	INodePropertyOptions,
 	INodeType,
 	INodeTypeDescription,
 } from 'n8n-workflow';
 import { NodeOperationError } from 'n8n-workflow';
+import { bessApiRequest } from './GenericFunctions';
 
 import { agentOperations, agentFields } from './AgentDescription';
 import { callOperations, callFields } from './CallDescription';
@@ -66,6 +69,27 @@ export class BessAi implements INodeType {
 			...analyticsOperations,
 			...analyticsFields,
 		],
+	};
+
+	methods = {
+		loadOptions: {
+			async getAgents(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				const agents = await bessApiRequest.call(this, 'GET', '/api/v1/agents');
+				if (!Array.isArray(agents)) return [];
+				return agents.map((agent: any) => ({
+					name: agent.name || agent.id,
+					value: agent.id,
+				}));
+			},
+			async getPhoneNumbers(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				const numbers = await bessApiRequest.call(this, 'GET', '/api/v1/phone-numbers');
+				if (!Array.isArray(numbers)) return [];
+				return numbers.map((num: any) => ({
+					name: num.phone_number || num.id,
+					value: num.id,
+				}));
+			},
+		},
 	};
 
 	async execute(this: IExecuteFunctions): Promise<INodeExecutionData[][]> {
